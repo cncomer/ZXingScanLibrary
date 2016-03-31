@@ -1,0 +1,37 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.bestjoy.library.scan">
+
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+        android:supportsRtl="true">
+
+        <!--<activity-->
+            <!--android:name="com.bestjoy.app.common.qrcode.CaptureActivity"-->
+            <!--android:clearTaskOnLaunch="true"-->
+            <!--android:configChanges="orientation|keyboardHidden|screenSize"-->
+            <!--android:excludeFromRecents="true"-->
+            <!--android:launchMode="singleTop"-->
+            <!--android:screenOrientation="landscape"-->
+            <!--android:stateNotNeeded="true"-->
+            <!--android:theme="@android:style/Theme.NoTitleBar.Fullscreen"-->
+            <!--android:windowSoftInputMode="stateAlwaysHidden">-->
+
+            <!--</activity>-->
+
+        <activity
+            android:name="com.bestjoy.app.common.qrcode.HistoryActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:excludeFromRecents="true"
+            android:label="@string/title_scan_history" />
+
+
+        <provider
+            android:name="com.bestjoy.app.common.qrcode.database.ScanHistoryBjnoteProvider"
+            android:authorities="${applicationId}.provider.ScanHistoryBjnoteProvider"
+            android:exported="true" />
+    </application>
+
+</manifest>

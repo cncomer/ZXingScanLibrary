@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="parser">
+        <item>"com.bestjoy.app.common.qrcode.result.URIResultParser"</item>
+    </string-array>
+
+    <string-array name="parser_handler">
+        <item>"com.bestjoy.app.common.qrcode.result.URIResultHandler"</item>
+    </string-array>
+</resources>
