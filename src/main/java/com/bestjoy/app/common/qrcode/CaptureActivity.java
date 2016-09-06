@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -45,7 +46,7 @@ import java.io.IOException;
 import java.util.Vector;
 import java.util.regex.Pattern;
 
-public class CaptureActivity extends Activity implements SurfaceHolder.Callback {
+public class CaptureActivity extends Activity implements SurfaceHolder.Callback{
 
   private static final String TAG = "CaptureActivity";
   private static final Pattern COMMA_PATTERN = Pattern.compile(",");
@@ -93,10 +94,12 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback 
 
   public static final String EXTRA_SCAN_TASK = "extra_scan_task";
 
+  protected Context mContext;
+
   @Override
   public void onCreate(Bundle icicle) {
     super.onCreate(icicle);
-
+    mContext = this;
     Window window = getWindow();
     window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     setContentView(R.layout.capture);
@@ -111,6 +114,9 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback 
     }
 
     CameraManager.init(getApplication());
+    if (this.getRequestedOrientation() == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) {
+      CameraManager.get().setDisplayOrientation(CameraManager.ORITENTATION_PORTRAIT);
+    }
     viewfinderView = (ViewfinderView) findViewById(R.id.viewfinder_view);
     resultView = findViewById(R.id.result_view);
     statusView = findViewById(R.id.status_view);
@@ -132,6 +138,16 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback 
     historyManager.trimHistory();
 
     media = BeepAndVibrate.getInstance();
+
+    View view = findViewById(R.id.button_back);
+    if (view != null) {
+      view.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          finish();
+        }
+      });
+    }
   }
 
   @Override
@@ -313,6 +329,10 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback 
     statusView.setVisibility(View.GONE);
     viewfinderView.setVisibility(View.GONE);
     resultView.setVisibility(View.VISIBLE);
+    View view = findViewById(R.id.button_back);
+    if (view != null) {
+      view.setVisibility(View.GONE);
+    }
 
     ImageView barcodeImageView = (ImageView) findViewById(R.id.barcode_image_view);
     barcodeImageView.setVisibility(View.VISIBLE);
@@ -357,7 +377,7 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback 
 
   }
 
-  private void initCamera(SurfaceHolder surfaceHolder) {
+  protected void initCamera(SurfaceHolder surfaceHolder) {
     try {
       CameraManager.get().openDriver(surfaceHolder);
       if (handler == null) {
@@ -396,6 +416,10 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback 
     statusView.setVisibility(View.VISIBLE);
 //    statusView.setBackgroundColor(getResources().getColor(R.color.status_view));
     viewfinderView.setVisibility(View.VISIBLE);
+    View view = findViewById(R.id.button_back);
+    if (view != null) {
+      view.setVisibility(View.VISIBLE);
+    }
 
 //    TextView textView = (TextView) findViewById(R.id.status_text_view);
 //    textView.setGravity(Gravity.LEFT | Gravity.CENTER_VERTICAL);
@@ -451,5 +475,14 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback 
     scanIntent.setPackage(context.getPackageName());
     scanIntent.putExtra(EXTRA_SCAN_TASK, scanTask);
     return scanIntent;
+  }
+
+
+  /**
+   * 重新开始扫码
+   */
+  public final void gobackAndScan() {
+    resetStatusView();
+    handler.sendEmptyMessage(R.id.restart_preview);
   }
 }

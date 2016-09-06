@@ -45,6 +45,8 @@ class ResultParserManager {
 
     protected void initParser(Context context) {
         //初始化解析器
+        PARSERS.clear();
+        ResultHandlerClassName.clear();
         String[] parsers = context.getResources().getStringArray(R.array.parser);
         Class<?> parserClz = null;
         Object parserObject = null;
@@ -97,7 +99,7 @@ class ResultParserManager {
         Class<?> parserClz = null;
         Object parserObject = null;
         for(String resultHandlerClassName: ResultHandlerClassName) {
-            DebugUtils.logD(TAG, "makeResultHandler try " + resultHandlerClassName);
+            DebugUtils.logD(TAG, "makeResultHandler try " + resultHandlerClassName + " for result.getType() " + type);
             try {
                 parserClz = Class.forName(resultHandlerClassName);
                 //检查类AnnotationTest是否含有@ParsedResultTypeAnnotation注解

@@ -15,3 +15,27 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+
+#保证条码解析处理程序不被删除或重命名
+#-keep class com.bestjoy.app.common.qrcode.result.ParsedResult
+#-keep class com.bestjoy.app.common.qrcode.result.ResultParser
+#
+#-keep class * extends com.bestjoy.app.common.qrcode.result.ParsedResult
+#
+#-keep class * extends com.bestjoy.app.common.qrcode.result.ResultParser
+#
+#-keep class * extends com.bestjoy.app.common.qrcode.result.ResultHandler {
+#    public <init>(android.app.Activity, com.bestjoy.app.common.qrcode.result.ParsedResult);
+#}
+#
+#-keep class com.bestjoy.library.scan.utils.QRGenerater {
+#    public *;
+#}
+#
+#-keep class com.bestjoy.library.scan.utils.DebugUtils {
+#    public *;
+#}
+#
+#-keep class com.bestjoy.** {
+#    public *;
+#}

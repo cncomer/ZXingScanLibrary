@@ -26,7 +26,6 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 
 import com.bestjoy.app.common.qrcode.CaptureActivity;
-import com.bestjoy.app.common.qrcode.CaptureActivityHandler;
 import com.bestjoy.app.common.qrcode.LocaleManager;
 import com.bestjoy.library.scan.R;
 import com.google.zxing.Result;
@@ -388,10 +387,7 @@ public abstract class ResultHandler {
 	}
 
 	public final void gobackAndScan() {// 返回扫描
-		((CaptureActivity) activity).resetStatusView();// 重新设置状态view
-		CaptureActivityHandler mHandler = (CaptureActivityHandler) ((CaptureActivity) activity)
-				.getHandler();
-		mHandler.sendEmptyMessage(R.id.restart_preview);// 开始预览
+		((CaptureActivity) activity).gobackAndScan();// 重新设置状态view
 	}
 	/**退出预览*/
 	final void exitScan() {

@@ -28,6 +28,8 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.SurfaceHolder;
 
+import com.bestjoy.library.scan.utils.DebugUtils;
+
 import java.io.IOException;
 
 /**
@@ -77,6 +79,17 @@ public final class CameraManager {
   /** Autofocus callbacks arrive here, and are dispatched to the Handler which requested them. */
   private final AutoFocusCallback autoFocusCallback;
 
+  private int mDisplayOrientationDegrees = -1;
+
+  /***
+   * 横屏
+   */
+  public static final int ORITENTATION_LANDSCAPE = 0;
+
+  /***
+   * 横屏
+   */
+  public static final int ORITENTATION_PORTRAIT = 90;
   /**
    * Initializes this static object with the Context of the calling Activity.
    *
@@ -130,6 +143,10 @@ public final class CameraManager {
       if (camera == null) {
         throw new IOException();
       }
+      if (mDisplayOrientationDegrees != -1) {
+        camera.setDisplayOrientation(mDisplayOrientationDegrees);
+      }
+
       camera.setPreviewDisplay(holder);
 
       if (!initialized) {
@@ -143,6 +160,15 @@ public final class CameraManager {
 //        FlashlightManager.enableFlashlight();
 //      }
     }
+  }
+
+  public void setDisplayOrientation(int orientation) {
+    mDisplayOrientationDegrees = orientation;
+
+  }
+
+  public int getDisplayOrientation() {
+    return mDisplayOrientationDegrees;
   }
 
   /**
@@ -269,10 +295,20 @@ public final class CameraManager {
         // Called early, before init even finished
         return null;
       }
-      rect.left = rect.left * cameraResolution.x / screenResolution.x;
-      rect.right = rect.right * cameraResolution.x / screenResolution.x;
-      rect.top = rect.top * cameraResolution.y / screenResolution.y;
-      rect.bottom = rect.bottom * cameraResolution.y / screenResolution.y;
+      DebugUtils.logD(TAG, "getFramingRectInPreview screenResolution.x=" + screenResolution.x + ", cameraResolution.x=" + cameraResolution.x);
+      DebugUtils.logD(TAG, "getFramingRectInPreview screenResolution.y=" + screenResolution.y + ", cameraResolution.y=" + cameraResolution.y);
+      if(mDisplayOrientationDegrees == CameraManager.ORITENTATION_PORTRAIT) {
+        rect.left = rect.left * cameraResolution.y / screenResolution.x;
+        rect.right = rect.right * cameraResolution.y / screenResolution.x;
+        rect.top = rect.top * cameraResolution.x / screenResolution.y;
+        rect.bottom = rect.bottom * cameraResolution.x / screenResolution.y;
+      } else {
+        rect.left = rect.left * cameraResolution.x / screenResolution.x;
+        rect.right = rect.right * cameraResolution.x / screenResolution.x;
+        rect.top = rect.top * cameraResolution.y / screenResolution.y;
+        rect.bottom = rect.bottom * cameraResolution.y / screenResolution.y;
+      }
+
       framingRectInPreview = rect;
     }
     return framingRectInPreview;

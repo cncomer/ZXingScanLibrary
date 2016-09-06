@@ -14,13 +14,13 @@
         android:id="@+id/viewfinder_view"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="@color/transparent" />
+        android:background="#00000000" />
 
     <LinearLayout
         android:id="@+id/result_view"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="@color/result_view"
+        android:background="#b0000000"
         android:orientation="vertical"
         android:padding="4dip"
         android:visibility="gone">
@@ -28,23 +28,22 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:gravity="top"
             android:orientation="horizontal"
             android:padding="12dip">
-
+            <ImageView
+                android:id="@+id/barcode_image_view"
+                android:layout_width="@dimen/barcode_image_view_size"
+                android:layout_height="@dimen/barcode_image_view_size"
+                android:layout_marginBottom="4dip"
+                android:src="#ffffffff"
+                android:scaleType="fitXY" />
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="left|top"
+                android:layout_marginLeft="10dip"
                 android:orientation="vertical">
-
-                <ImageView
-                    android:id="@+id/barcode_image_view"
-                    android:layout_width="@dimen/barcode_image_view_size"
-                    android:layout_height="@dimen/barcode_image_view_size"
-                    android:layout_marginBottom="4dip"
-                    android:scaleType="fitXY" />
 
                 <TextView
                     android:id="@+id/format_text_view"
@@ -52,7 +51,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="left"
                     android:text="@string/msg_default_format"
-                    android:textColor="@color/result_minor_text"
+                    android:textColor="#ffc0c0c0"
                     android:textSize="12sp" />
 
                 <TextView
@@ -61,30 +60,30 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="left"
                     android:text="@string/msg_default_type"
-                    android:textColor="@color/result_minor_text"
+                    android:textColor="#ffc0c0c0"
                     android:textSize="12sp" />
 
             </LinearLayout>
 
-            <ScrollView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1">
-
-                <TextView
-                    android:id="@+id/contents_text_view"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:autoLink="all"
-                    android:gravity="left|top"
-                    android:paddingLeft="12dip"
-                    android:text="@string/msg_default_contents"
-                    android:textColor="@color/result_text"
-                    android:textSize="22sp" />
-
-            </ScrollView>
-
         </LinearLayout>
+
+        <ScrollView
+            android:layout_width="fill_parent"
+            android:layout_height="0dip"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/contents_text_view"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:autoLink="all"
+                android:gravity="left|top"
+                android:paddingLeft="12dip"
+                android:text="@string/msg_default_contents"
+                android:textColor="#ffffffff"
+                android:textSize="22sp" />
+
+        </ScrollView>
 
         <LinearLayout
             android:id="@+id/result_button_view"
@@ -98,35 +97,45 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textSize="14sp"
-                android:visibility="gone" />
+                android:visibility="gone"
+                android:layout_marginLeft="4dip"
+                style="@style/ScanDefaultShapeButton"/>
 
             <Button
                 android:layout_width="0sp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textSize="14sp"
-                android:visibility="gone" />
+                android:visibility="gone"
+                android:layout_marginLeft="4dip"
+                style="@style/ScanDefaultShapeButton"/>
 
             <Button
                 android:layout_width="0sp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textSize="14sp"
-                android:visibility="gone" />
+                android:visibility="gone"
+                android:layout_marginLeft="4dip"
+                style="@style/ScanDefaultShapeButton"/>
 
             <Button
                 android:layout_width="0sp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textSize="14sp"
-                android:visibility="gone" />
+                android:visibility="gone"
+                android:layout_marginLeft="4dip"
+                style="@style/ScanDefaultShapeButton"/>
 
             <Button
                 android:layout_width="0sp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textSize="14sp"
-                android:visibility="gone" />
+                android:visibility="gone"
+                android:layout_marginLeft="4dip"
+                style="@style/ScanDefaultShapeButton"/>
 
         </LinearLayout>
 
@@ -135,14 +144,14 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="@color/transparent"
+        android:background="#00000000"
         android:orientation="vertical">
 
         <FrameLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:background="@color/transparent" />
+            android:background="#00000000" />
 
         <!--  android:background="@color/status_view" -->
         <LinearLayout
@@ -151,19 +160,16 @@
             android:layout_height="wrap_content"
             android:layout_weight="0"
             android:baselineAligned="false"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:padding="4dip">
 
             <TextView
                 android:id="@+id/status_text_view"
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="left|center_vertical"
-                android:layout_weight="1"
                 android:gravity="center"
-                android:text="@string/msg_default_status"
+                android:text="@string/msg_default_status_port"
                 android:textColor="#ffffffff"
-                android:textSize="18sp"
                 android:textStyle="bold" />
             <!-- 目前不显示闪光灯按钮 -->
             <ToggleButton
@@ -176,15 +182,15 @@
                 android:visibility="gone" />
 
         </LinearLayout>
-        <!--<Button android:id="@+id/button_back"-->
-            <!--android:layout_width="200dip"-->
-            <!--android:layout_height="40dip"-->
-            <!--android:textSize="16sp"-->
-            <!--style="@style/ScanDefaultShapeButton"-->
-            <!--android:layout_gravity="center_horizontal"-->
-            <!--android:text="@string/menu_back"-->
-            <!--android:layout_marginTop="10dip"-->
-            <!--android:layout_marginBottom="20dip"/>-->
+        <Button android:id="@+id/button_back"
+            android:layout_width="200dip"
+            android:layout_height="40dip"
+            android:textSize="16sp"
+            style="@style/ScanDefaultShapeButton"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/menu_back"
+            android:layout_marginTop="10dip"
+            android:layout_marginBottom="20dip"/>
 
     </LinearLayout>
 

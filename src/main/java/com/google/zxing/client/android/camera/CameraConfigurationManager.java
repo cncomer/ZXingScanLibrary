@@ -58,8 +58,23 @@ final class CameraConfigurationManager {
     previewFormatString = parameters.get("preview-format");
     Log.d(TAG, "Default preview format: " + previewFormat + '/' + previewFormatString);
 
-    cameraResolution = getCameraResolution(parameters, screenResolution);
-    Log.d(TAG, "Camera resolution: " + screenResolution);
+//    cameraResolution = getCameraResolution(parameters, screenResolution);
+//    Log.d(TAG, "Camera resolution: " + screenResolution);
+
+    Point screenResolutionForCamera = new Point();
+    screenResolutionForCamera.x = screenResolution.x;
+    screenResolutionForCamera.y = screenResolution.y;
+    // preview size is always something like 480*320, other 320*480
+    if (CameraManager.get().getDisplayOrientation() == CameraManager.ORITENTATION_PORTRAIT) {
+      screenResolutionForCamera.x = screenResolution.y;
+      screenResolutionForCamera.y = screenResolution.x;
+    } else {
+      screenResolutionForCamera.x = screenResolution.x;
+      screenResolutionForCamera.y = screenResolution.y;
+    }
+    Log.d(TAG, "Camera screenResolutionForCamera: " + screenResolutionForCamera);
+    cameraResolution = getCameraResolution(parameters, screenResolutionForCamera);
+    Log.d(TAG, "Camera resolution: " + cameraResolution);
   }
 
   /**
