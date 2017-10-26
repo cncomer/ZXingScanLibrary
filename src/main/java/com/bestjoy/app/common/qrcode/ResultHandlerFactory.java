@@ -18,7 +18,6 @@ package com.bestjoy.app.common.qrcode;
 
 import android.app.Activity;
 
-import com.bestjoy.app.common.qrcode.ResultParserManager;
 import com.bestjoy.app.common.qrcode.result.ResultHandler;
 import com.google.zxing.Result;
 

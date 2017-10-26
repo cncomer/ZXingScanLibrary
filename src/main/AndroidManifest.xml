@@ -27,7 +27,7 @@
 
         <activity
             android:name="com.bestjoy.app.common.qrcode.HistoryActivity"
-            android:configChanges="orientation|keyboardHidden"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:excludeFromRecents="true"
             android:label="@string/title_scan_history" />
 
@@ -35,7 +35,7 @@
         <provider
             android:name="com.bestjoy.app.common.qrcode.database.ScanHistoryBjnoteProvider"
             android:authorities="${applicationId}.provider.ScanHistoryBjnoteProvider"
-            android:exported="true" />
+            android:exported="false" />
     </application>
 
 </manifest>

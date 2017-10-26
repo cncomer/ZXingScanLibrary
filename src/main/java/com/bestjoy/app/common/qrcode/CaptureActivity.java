@@ -93,8 +93,11 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback{
 
 
   public static final String EXTRA_SCAN_TASK = "extra_scan_task";
+  public static final String EXTRA_SCAN_TASK_FROM = "extra_scan_task_from";
 
   protected Context mContext;
+
+  protected int modelId = 0;
 
   @Override
   public void onCreate(Bundle icicle) {
@@ -104,13 +107,10 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback{
     window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     setContentView(R.layout.capture);
 
-    if (icicle != null) {
-    	mScanTask = icicle.getBoolean(EXTRA_SCAN_TASK, false);
-    } else {
-    	Intent intent = getIntent();
-        if (intent != null) {
-        	mScanTask = intent.getBooleanExtra(EXTRA_SCAN_TASK, false);
-        }
+    Intent intent = getIntent();
+    if (intent != null) {
+      mScanTask = intent.getBooleanExtra(EXTRA_SCAN_TASK, false);
+      modelId = intent.getIntExtra(EXTRA_SCAN_TASK_FROM, 0);
     }
 
     CameraManager.init(getApplication());
